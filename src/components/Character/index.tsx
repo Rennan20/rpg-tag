@@ -20,9 +20,9 @@ export const Character = ({ x, y, side, name }: Props) => {
   return (
     <C.Container
       size={size}
-      left={x * size}
-      top={y * size}
-      sidePos={sides[side] ?? 0}
+      $left={x * size}
+      $top={y * size}
+      $sidePos={sides[side] ?? 0}
     >
       <C.NameBox>{name}</C.NameBox>
     </C.Container>

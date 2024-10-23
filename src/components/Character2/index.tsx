@@ -20,9 +20,9 @@ export const Character2 = ({ x, y, side, name }: Props) => {
   return (
     <C.Container
       size={size}
-      left={x * size}
-      top={y * size}
-      sidePos={sides[side] ?? 0}
+      $left={x * size} // Usando a propriedade transiente
+      $top={y * size} // Usando a propriedade transiente
+      $sidePos={sides[side] ?? 0} // Usando a propriedade transiente
     >
       <C.NameBox>{name}</C.NameBox>
     </C.Container>

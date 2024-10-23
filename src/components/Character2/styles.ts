@@ -2,17 +2,17 @@ import styled from "styled-components";
 
 export const Container = styled.div<{
   size: number;
-  left: number;
-  top: number;
-  sidePos: number;
+  $left: number; // Alterado para transient prop
+  $top: number; // Alterado para transient prop
+  $sidePos: number; // Alterado para transient prop
 }>`
   width: ${(props) => props.size}px;
   height: ${(props) => props.size}px;
   position: absolute;
-  left: ${(props) => props.left}px;
-  top: ${(props) => props.top}px;
+  left: ${(props) => props.$left}px; // Usando a transient prop
+  top: ${(props) => props.$top}px; // Usando a transient prop
   background-image: url("/assets/char2.png");
-  background-position: 0px ${(props) => props.sidePos}px;
+  background-position: 0px ${(props) => props.$sidePos}px; // Usando a transient prop
 `;
 
 export const NameBox = styled.div`

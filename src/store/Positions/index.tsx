@@ -11,10 +11,6 @@ const canMove = (x: number, y: number) => {
   );
 };
 
-const isWithinTimeLimit = (startTime: number, limit: number) => {
-  return Date.now() - startTime < limit;
-};
-
 export const INITIAL_POSITIONS = {
   Jane: {
     position: { x: 3, y: 5 },
@@ -28,58 +24,80 @@ export const INITIAL_POSITIONS = {
   },
 };
 
-const useStore = create<CharacterState>((set) => {
-  const startTime = Date.now();
+const useStore = create<CharacterState>((set) => ({
+  characters: INITIAL_POSITIONS,
+  isCaught: false,
+  scoreJane: 0,
+  scoreJohn: 0,
+  isGameActive: true,
+  moveCharacter: (name, direction) =>
+    set((state) => {
+      if (!state.isGameActive) return state;
 
-  return {
-    characters: INITIAL_POSITIONS,
-    isCaught: false,
-    score: 0,
-    moveCharacter: (name, direction) =>
-      set((state) => {
-        const character = state.characters[name];
-        let newPosition = { ...character.position };
+      const character = state.characters[name];
+      let newPosition = { ...character.position };
+      let moved = false;
 
-        switch (direction) {
-          case "left":
-            if (canMove(newPosition.x - 1, newPosition.y)) newPosition.x -= 1;
-            character.side = "left" as CharacterSides;
-            break;
-          case "right":
-            if (canMove(newPosition.x + 1, newPosition.y)) newPosition.x += 1;
-            character.side = "right" as CharacterSides;
-            break;
-          case "up":
-            if (canMove(newPosition.x, newPosition.y - 1)) newPosition.y -= 1;
-            character.side = "up" as CharacterSides;
-            break;
-          case "down":
-            if (canMove(newPosition.x, newPosition.y + 1)) newPosition.y += 1;
-            character.side = "down" as CharacterSides;
-            break;
-        }
+      switch (direction) {
+        case "left":
+          if (canMove(newPosition.x - 1, newPosition.y)) {
+            newPosition.x -= 1;
+            moved = true;
+          }
+          character.side = "left";
+          break;
+        case "right":
+          if (canMove(newPosition.x + 1, newPosition.y)) {
+            newPosition.x += 1;
+            moved = true;
+          }
+          character.side = "right";
+          break;
+        case "up":
+          if (canMove(newPosition.x, newPosition.y - 1)) {
+            newPosition.y -= 1;
+            moved = true;
+          }
+          character.side = "up";
+          break;
+        case "down":
+          if (canMove(newPosition.x, newPosition.y + 1)) {
+            newPosition.y += 1;
+            moved = true;
+          }
+          character.side = "down";
+          break;
+      }
 
-        const caught =
-          state.checkCollision(
-            newPosition,
-            state.characters["John"].position
-          ) && isWithinTimeLimit(startTime, 30000);
+      if (moved) {
         return {
           characters: {
             ...state.characters,
             [name]: { ...character, position: newPosition },
           },
-          isCaught: caught,
-          score: caught ? state.score + 1 : state.score,
+          isCaught: false,
         };
-      }),
-    checkCollision: (pos1, pos2) => {
-      return pos1.x === pos2.x && pos1.y === pos2.y;
-    },
-    resetCaught: () => set({ isCaught: false }),
-    resetScore: () => set({ score: 0 }),
-    setCharacterPositions: (positions) => set({ characters: positions }),
-  };
-});
+      }
+
+      return state;
+    }),
+
+  checkCollision: (pos1, pos2) => {
+    return pos1.x === pos2.x && pos1.y === pos2.y;
+  },
+
+  resetCaught: () => set({ isCaught: false }),
+
+  resetScores: () => set({ scoreJane: 0, scoreJohn: 0 }),
+
+  setCharacterPositions: (positions) =>
+    set(() => ({
+      characters: positions,
+      isCaught: false,
+      isGameActive: true,
+    })),
+
+  setGameActive: (isActive) => set(() => ({ isGameActive: isActive })),
+}));
 
 export default useStore;

@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+export const GameLayout = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+`;
+
+export const Game = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 export const Container = styled.div`
   background-color: #24282f;
   min-height: 100vh;
@@ -16,12 +28,23 @@ export const Map = styled.div`
   overflow: hidden;
 `;
 
-export const Footer = styled.footer`
+export const GamePannellContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 20px;
+`;
+
+export const Button = styled.button`
+  margin-top: 10px;
   padding: 10px;
-  background-color: #1e2227;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;

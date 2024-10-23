@@ -10,14 +10,16 @@ export type CharacterState = {
     };
   };
   isCaught: boolean;
-  score: number;
+  scoreJane: number;
+  scoreJohn: number;
+  isGameActive: boolean;
   moveCharacter: (name: string, direction: string) => void;
   checkCollision: (
     pos1: { x: number; y: number },
     pos2: { x: number; y: number }
   ) => boolean;
   resetCaught: () => void;
-  resetScore: () => void;
-
+  resetScores: () => void;
   setCharacterPositions: (positions: typeof INITIAL_POSITIONS) => void;
+  setGameActive: (isActive: boolean) => void;
 };

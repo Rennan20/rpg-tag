@@ -18,10 +18,7 @@ export const GamePannell: React.FC<GamePannellProps> = ({
       {timeRemaining === 0 && <C.Message>{gameMessage}</C.Message>}
       <C.WinsContainer>
         <C.Wins>Jane: {janeWins} Vitórias</C.Wins>
-        <C.Wins>
-          John: {johnWins} Vitórias (placar acrescido de 2 a cada vitória)
-        </C.Wins>{" "}
-        {/* Mensagem do placar */}
+        <C.Wins>John: {johnWins} Vitórias</C.Wins>
       </C.WinsContainer>
       <C.Controls>
         <C.ControlMessage>

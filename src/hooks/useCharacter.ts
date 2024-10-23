@@ -38,7 +38,7 @@ const useMovement = () => {
   };
 
   useEffect(() => {
-    if (!isGameActive) return; // Evitar continuar se o jogo não estiver ativo
+    if (!isGameActive) return;
 
     let timerId: NodeJS.Timeout;
 
